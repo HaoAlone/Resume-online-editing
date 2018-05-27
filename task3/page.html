@@ -1,0 +1,110 @@
+<html>
+<head>
+	<meta charset=utf-8>
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_548832_47dxon37a6wuq5mi.css">
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		ul {
+			list-style: none;
+		}
+		#app {
+			width: 50%;
+			/*height: 800px;*/
+			margin: 20px auto;
+			border: 2px solid lightgray;
+			/*text-align: center;*/
+			border-radius: 10px;
+		}
+		.main {
+			width:100%;
+			background: #597d9d;
+			padding: 5px 10px;
+			border-radius: 5px 5px 0 0;
+		}
+		i.iconfont.icon-jiahao {
+			font-size: 20px;
+			/*background: #fff;*/
+		}
+		input[type=text]{
+			width: 100%;
+			border:none;
+			background: #597d9d;
+			font-size: 20px;
+			padding: 5px;
+		}
+		/* 设置input输入框的背景字的字体颜色*/
+		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+			color: #fff;
+			opacity: 1; /* Firefox */
+		}
+
+		:-ms-input-placeholder { /* Internet Explorer 10-11 */
+			color: #fff;
+		}
+
+		::-ms-input-placeholder { /* Microsoft Edge */
+			color: #fff;
+		}
+		ul.todos li {
+			position: relative;
+			padding: 5px;
+			border-bottom: 1px solid #000;
+		}
+		ul.todos li:last-child {
+			border-bottom: none;
+		}
+		ul.todos li input {
+			margin-right: 5px;
+		}
+		ul.todos li .right {
+			float: right;
+		}
+		.right button {
+			padding: 3px;
+		}
+		/*清除浮动*/
+		.clearfix {
+			zoom: 1;
+		}
+		.clearfix::after {
+			content: '';
+			display: block;
+			clear: both;
+			height: 0;
+		}
+		[v-clock] {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+<div id="app" class="clearfix" v-clock>
+	<div class="main">
+		<!--<i class="iconfont icon-jia"></i>-->
+		<input type="text" v-model="newTodo" v-on:keypress.enter="addTodo" placeholder="New to-do">
+	</div>
+
+	<ul class="todos">
+		<li v-for="todo in todoList" class="clearfix">
+			<input type="checkbox" v-model="todo.done">
+			{{ todo.title}}
+			<div class="right">
+				{{ todo.createTime }}
+				<span v-if="todo.done">已完成</span>
+				<span v-else>未完成</span>
+				<button @click="removeTodo(todo)">删除</button>
+			</div>
+
+		</li>
+
+	</ul>
+</div>
+<script src="dist/bundle.js"></script>
+</body>
+</html>
