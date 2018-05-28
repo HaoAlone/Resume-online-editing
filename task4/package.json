@@ -1,0 +1,25 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "vue hello",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HaoAlone/Resume-online-editing.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack-cli",
+    "watch": "./node_modules/.bin/webpack-cli --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cue": "^0.1.0",
+    "leancloud-storage": "^3.7.0",
+    "vue": "^2.5.16"
+  },
+  "devDependencies": {
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
+  }
+}
