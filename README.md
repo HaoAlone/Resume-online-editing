@@ -16,3 +16,5 @@ Tips：如果你不想每次都运行 webpack，那么你可以新开一个命�
 如果已经登录过会直接登录，不用输入用户名密码再登录了。
 有退出登录按钮
 [待办事项在线编辑链接](https://haoalone.github.io/Resume-online-editing/task4/page.html)
+## task5 
+数据关联，数据不再保存在本地localstorage里了，而是通过leanStorage存储用户数据

@@ -1,0 +1,213 @@
+<html>
+<head>
+	<meta charset=utf-8>
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_548832_47dxon37a6wuq5mi.css">
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		ul {
+			list-style: none;
+		}
+		#app {
+			width: 50%;
+			/*height: 800px;*/
+			margin: 20px auto;
+			border: 2px solid lightgray;
+			/*text-align: center;*/
+			border-radius: 10px;
+		}
+		.main {
+			width:100%;
+			background: #597d9d;
+			padding: 5px 10px;
+			border-radius: 7px 7px 0 0;
+			position: relative;
+		}
+		i.iconfont.icon-jiahao {
+			font-size: 20px;
+			/*background: #fff;*/
+		}
+		.main>input[type=text]{
+			width: 70%;
+			border:none;
+			background: #597d9d;
+			font-size: 20px;
+			padding: 5px;
+			outline: none;
+		}
+		.main .logout {
+			float: right;
+			top: 10px;
+		}
+
+		.main .logout button {
+			display: inline-block;
+			width: 50px;
+			height: 30px;
+			font-size: 16px;
+			border-radius: 12px;
+		}
+		/* 设置input输入框的背景字的字体颜色*/
+		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+			color: #fff;
+			opacity: 1; /* Firefox */
+		}
+
+		:-ms-input-placeholder { /* Internet Explorer 10-11 */
+			color: #fff;
+		}
+
+		::-ms-input-placeholder { /* Microsoft Edge */
+			color: #fff;
+		}
+		ul.todos li {
+			position: relative;
+			padding: 5px;
+			border-bottom: 1px solid #000;
+		}
+		ul.todos li:last-child {
+			border-bottom: none;
+		}
+		ul.todos li.todo input {
+			margin-right: 5px;
+		}
+		ul.todos li .right {
+			float: right;
+		}
+		.right button {
+			padding: 3px;
+		}
+		/*清除浮动*/
+		.clearfix {
+			zoom: 1;
+		}
+		.clearfix::after {
+			content: '';
+			display: block;
+			clear: both;
+			height: 0;
+		}
+		[v-clock] {
+			display: none;
+		}
+		/*
+			登录注册样式
+		*/
+		#signInAndSingnUp  {
+			/*border: 1px solid red;*/
+			margin: 0px auto;
+			width: 200px;
+		}
+		#signInAndSingnUp .control {
+			text-align: center;
+		}
+		#signInAndSingnUp .formRow {
+			margin: 0px 0 0 0;
+			height: 33px;
+			display: inline-block;
+			width: 100%;
+			min-width: 300px;
+			position: relative;
+		}
+		#signInAndSingnUp .formRow label {
+			width: 60px;
+			font-size: 14px;
+			line-height: 30px;
+			display: inline-block;
+			text-align: center;
+		}
+		#signInAndSingnUp .formRow input[type="text"],input[type="password"] {
+			height: 23px;
+			border: 1px solid #ddd;
+			padding-left: 10px;
+			font-size: 13px;
+			border-radius: 3px;
+			width: 140px;
+		}
+		#signInAndSingnUp .formActions {
+			/*border: 1px solid red;*/
+			text-align: center;
+			margin-top: 10px;
+		}
+		#signInAndSingnUp .formActions input[type="submit"] {
+			display: inline-block;
+			width: 50px;
+			font-size: 20px;
+			/*color: red;*/
+			padding: 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+<div id="app" class="clearfix" v-clock>
+	<section id="signInAndSingnUp" v-if="!currentUser">
+		<div class="control">
+			<input id="signup" type="radio" name="type" value="login" v-model="actionType">
+			<label for="signup">登录</label>
+
+			<input id="login" type="radio" name="type" value="signUp" v-model="actionType">
+			<label for="login">注册</label>
+		</div>
+		<div class="signUp" v-if="actionType === 'signUp'">
+			<form @submit.prevent="signUp">
+				<div class="formRow">
+					<label for="">用户名:</label><input type="text" v-model="formData.username">
+				</div>
+				<div class="formRow">
+					<label for="">密  码 :</label><input type="password" v-model="formData.password">
+				</div>
+				<div class="formActions">
+					<input type="submit" value="注册">
+				</div>
+			</form>
+		</div>
+		<div class="login" v-if="actionType === 'login'">
+			<form @submit.prevent="logIn">
+				<div class="formRow">
+					<label for="">用户名:</label><input type="text" v-model="formData.username">
+				</div>
+				<div class="formRow">
+					<label for="">密  码 :</label><input type="password" v-model="formData.password">
+				</div>
+				<div class="formActions">
+					<input type="submit" value="登录">
+				</div>
+			</form>
+		</div>
+	</section>
+	<section id="#todo" v-if="currentUser">
+		<div class="main clearfix">
+			<!--<i class="iconfont icon-jia"></i>-->
+			<input type="text" v-model="newTodo" v-on:keypress.enter="addTodo" placeholder="New to-do" >
+			<div class="logout">
+				<span v-model="currentUser">{{ currentUser.username }}：</span>
+				<button @click="logOut" >登出</button>
+			</div>
+		</div>
+
+		<ul class="todos">
+			<li v-for="todo in todoList" class="clearfix todo">
+				<input type="checkbox" v-model="todo.done">
+				{{ todo.title}}
+				<div class="right">
+					{{ todo.createTime }}
+					<span v-if="todo.done">已完成</span>
+					<span v-else>未完成</span>
+					<button @click="removeTodo(todo)">删除</button>
+				</div>
+
+			</li>
+
+		</ul>
+	</section>
+
+</div>
+<script src="dist/bundle.js"></script>
+</body>
+</html>
